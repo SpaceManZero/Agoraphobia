@@ -24,15 +24,14 @@ namespace LexiconLMS.Controllers
 				Course course = db.Users.Find(User.Identity.GetUserId()).Course;
 				if (course != null)
 				{
-					return View(db.Courses.Find(course.Id));
+					return View(db.Courses.ToList<Course>().Where((c => c.Id == course.Id)));
 				}
-				return View(db.Courses.Find(-1));
-
+				return View(new List<Course>());
 			}
 			else if (User.IsInRole("Teacher"))
 				return View(db.Courses.ToList());
 			else
-				return View();
+				return View(new List<Course>());
 		}
 
 		// GET: Courses/Details/5
