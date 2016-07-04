@@ -1,58 +1,88 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Course>
 
-<h2>Course(s)</h2>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-4">
+			<h3>Course(s)</h3>
+			@foreach (var course in Model)
+			{
 
-
-
-<table class="table">
-	<tr>
-		<th>
-			@Html.DisplayNameFor(model => model.Name)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.Description)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.StartDate)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.EndDate)
-		</th>
-		<th></th>
-	</tr>
-
-
-@foreach (var item in Model)
-{
-	<tr>
-		<td>
-			@Html.DisplayFor(modelItem => item.Name)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Description)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.StartDate)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.EndDate)
-		</td>
-		@*<td>
-			@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-			@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-			@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-		</td>*@
-	</tr>
-}
-</table>
-
-	<div>
-		<h4><a data-toggle="collapse" data-parent="#accordion" href="#collapseDNF">What is DotNetFunda?</a></h4>
+				<h3>
+					<a data-toggle="collapse" href="#collapseCourse@(course.Id)">
+						@Html.DisplayFor(modelItem => course.Name)
+					</a>
+				</h3>
+				<div id="collapseCourse@(course.Id)" class="collapse in">
+					@foreach (var module in Model.FirstOrDefault(c => c.Id == course.Id).Modules)
+					{
+						<h4>
+							<a data-toggle="collapse" href="#collapseModule@(module.Id)">
+								@Html.DisplayFor(modelItem => module.Name)
+							</a>
+						</h4>
+						<div id="collapseModule@(module.Id)" class="collapse in">
+							@foreach (var activity in Model.FirstOrDefault(c => c.Id == course.Id).Modules.FirstOrDefault(m => m.Id == module.Id).Activities)
+							{
+								<h6>
+									@Html.DisplayFor(modelItem => activity.Name)
+								</h6>
+							}
+						</div>
+					}
+				</div>
+			}
+		</div>
+		<div class="panel, col-lg-8">
+			<div class="panel">
+				<p>dgjdlfhgldhfgädfhgäljhg</p>
+			</div>
+		</div>
 	</div>
-	<div id="collapseDNF" class="collapse in">
-		<!-- By default it shows the content below. remove 'in' to hide the content by default -->
-		DotNetFunda.Com is a popular online tutorials and guide for latest Microsoft® technologies aimed for beginners and intermediate level professionals. It helps beginners to become intermediate level professionals and intermediates to become an expert.
-	</div>
+
+
+</div>
+	@*<table class="table">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Name)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Description)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.StartDate)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.EndDate)
+				</th>
+				<th></th>
+			</tr>
+
+
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Description)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.StartDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.EndDate)
+				</td>
+				<td>
+					@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+					@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+					@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+				</td>
+			</tr>
+		}
+		</table>*@
+
 
 
 
