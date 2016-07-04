@@ -39,5 +39,11 @@ namespace LexiconLMS.Models
         }
 
 		public System.Data.Entity.DbSet<LexiconLMS.Models.Course> Courses { get; set; }
+
+		public System.Data.Entity.DbSet<LexiconLMS.Models.Module> Modules { get; set; }
+
+		public System.Data.Entity.DbSet<LexiconLMS.Models.Activity> Activities { get; set; }
+
+		public System.Data.Entity.DbSet<LexiconLMS.Models.ActivityType> ActivityTypes { get; set; }
 	}
 }

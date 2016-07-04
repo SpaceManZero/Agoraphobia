@@ -1,31 +1,30 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Course>
 
-<h2>Index</h2>
+<h2>Course(s)</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th></th>
-    </tr>
-	
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Name)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Description)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.StartDate)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.EndDate)
+		</th>
+		<th></th>
+	</tr>
+
 
 @foreach (var item in Model)
 {
-<tr>
+	<tr>
 		<td>
 			@Html.DisplayFor(modelItem => item.Name)
 		</td>
@@ -38,12 +37,22 @@
 		<td>
 			@Html.DisplayFor(modelItem => item.EndDate)
 		</td>
-		<td>
+		@*<td>
 			@Html.ActionLink("Details", "Details", new { id = item.Id }) |
 			@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
 			@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-		</td>
+		</td>*@
 	</tr>
 }
-
 </table>
+
+	<div>
+		<h4><a data-toggle="collapse" data-parent="#accordion" href="#collapseDNF">What is DotNetFunda?</a></h4>
+	</div>
+	<div id="collapseDNF" class="collapse in">
+		<!-- By default it shows the content below. remove 'in' to hide the content by default -->
+		DotNetFunda.Com is a popular online tutorials and guide for latest Microsoft® technologies aimed for beginners and intermediate level professionals. It helps beginners to become intermediate level professionals and intermediates to become an expert.
+	</div>
+
+
+
