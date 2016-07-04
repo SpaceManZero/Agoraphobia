@@ -9,7 +9,8 @@
 
 				<h3>
 					<a data-toggle="collapse" href="#collapseCourse@(course.Id)">
-						@Html.DisplayFor(modelItem => course.Name)
+						@Html.ActionLink(course.Name, "Index", "Courses", null, new { Course = course.Id })
+						@*@Html.DisplayFor(modelItem => course.Name)*@
 					</a>
 				</h3>
 				<div id="collapseCourse@(course.Id)" class="collapse in">
@@ -34,6 +35,9 @@
 		</div>
 		<div class="panel, col-lg-8">
 			<div class="panel">
+				@{ 
+					@Html.Display("Keys: " + Request.QueryString.Keys.Count)
+				}
 				<p>dgjdlfhgldhfgädfhgäljhg</p>
 			</div>
 		</div>
