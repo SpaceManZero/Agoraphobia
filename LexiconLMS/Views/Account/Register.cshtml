@@ -17,6 +17,17 @@
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
+
+    @* CheckBox to distinguish teachers from students *@
+    <div class="form-group">
+        @Html.LabelFor(m => m.Teacher, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(m => m.Teacher, new { @class = "form-control" })
+        </div>
+    </div>
+
+    @* CheckBox to distinguish teachers from students <----------/> *@
+
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">

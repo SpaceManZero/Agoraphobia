@@ -70,8 +70,10 @@ namespace LexiconLMS.Migrations
 			// Add another student
 			if (!context.Users.Any(u => u.Email == "student002@lexicon.se"))
 			{
-				var user = new ApplicationUser { UserName = "student002@lexicon.se", Email = "student002@lexicon.se" };
-				user.Course = context.Courses.FirstOrDefault(c => c.Name == ".NET Intro");
+                //Användarnamnet för studenten
+                var user = new ApplicationUser { UserName = "student002@lexicon.se", Email = "student002@lexicon.se" };
+                user.Course = context.Courses.FirstOrDefault(c => c.Name == ".NET Intro");
+                //Lösenord för studenten
 				uManager.Create(user, "Student_002");
 				user = uManager.FindByEmail("student002@lexicon.se");
 				uManager.AddToRole(user.Id, "Student");
