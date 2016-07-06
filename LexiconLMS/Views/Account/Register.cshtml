@@ -9,7 +9,7 @@
 {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
-    <hr />
+    @* <hr /> _MAN*@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
@@ -18,11 +18,11 @@
         </div>
     </div>
 
-    @* CheckBox to distinguish teachers from students *@
+    @* CheckBox to distinguish teachers from students _MAN*@
     <div class="form-group">
         @Html.LabelFor(m => m.Teacher, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.CheckBoxFor(m => m.Teacher, new { @class = "form-control" })
+            @Html.CheckBoxFor(m => m.Teacher, new { @class = "form-control-man" })
         </div>
     </div>
 
