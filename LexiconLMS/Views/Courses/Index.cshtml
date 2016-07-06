@@ -3,38 +3,53 @@
 	@functions{
 		string IsCollapsed(string type, int id)
 		{
-			if(Request.QueryString.Keys.Count > 0 &&
-				Request.QueryString.Keys[0] == type &&
-				Request.QueryString[Request.QueryString.Keys[0]] == id.ToString())
+			string collapsed = "out";
+			if (Request.QueryString.Keys.Count > 0)
 			{
-				return "in";
+				var courseId = Request.QueryString["Course"];
+				var moduleId = Request.QueryString["Module"];
+				var activityId = Request.QueryString["Activity"];
+
+				if ((type == "Course" && courseId == id.ToString()) ||
+					(type == "Module" && moduleId == id.ToString()) ||
+					(type == "Activity" && activityId == id.ToString()))
+				{
+					collapsed = "in";
+				}
 			}
-			return "out";
+
+			return collapsed;
+
+			//if (Request.QueryString.Keys.Count > 0 &&
+			//	Request.QueryString.Keys[0] == type &&
+			//	Request.QueryString[Request.QueryString.Keys[0]] == id.ToString())
+			//{
+			//	return "in";
+			//}
+			//return "out";
 		}
 
-		string Description(string courseId = null, string moduleId = null, string activityId = null)
+		string GetSelectedItem(string courseId = null, string moduleId = null, string activityId = null)
 		{
-			string desc = "";
+			string selection = "";
 
-			if (courseId != null)
+			if (courseId != null && moduleId == null && activityId == null)
 			{
 				var course = Model.FirstOrDefault(q => q.Id.ToString() == courseId);
-				desc = course.Description;
+				selection = course.Description;
 			}
-			if (moduleId != null)
+			if (courseId != null && moduleId != null && activityId == null)
 			{
 				var module = Model.FirstOrDefault(q => q.Id.ToString() == courseId).Modules.FirstOrDefault(q => q.Id.ToString() == moduleId);
-				desc = module.Description;
-
+				selection = module.Description;
 			}
-			if (activityId != null)
+			if (courseId != null && moduleId != null && activityId != null)
 			{
 				var activity = Model.FirstOrDefault(q => q.Id.ToString() == courseId).Modules.FirstOrDefault(q => q.Id.ToString() == moduleId).Activities.FirstOrDefault(q => q.Id.ToString() == activityId);
-				desc = activity.Description;
-
+				selection = activity.Description;
 			}
 
-			return desc;
+			return selection;
 		}
 }
 
@@ -66,7 +81,7 @@
 							@foreach (var activity in Model.FirstOrDefault(c => c.Id == course.Id).Modules.FirstOrDefault(m => m.Id == module.Id).Activities)
 							{
 								<h6>
-									@Html.ActionLink(module.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id, Activity = activity.Id })
+									@Html.ActionLink(activity.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id, Activity = activity.Id }, null)
 									@*@Html.DisplayFor(modelItem => activity.Name)*@
 								</h6>
 							}
@@ -77,7 +92,25 @@
 		</div>
 		<div class="panel, col-lg-8">
 			<div class="panel">
-				<p>@Description(Request.QueryString["Course"], Request.QueryString["Module"], Request.QueryString["Activity"] )</p>
+				@{
+					string selection = ""; ;
+					selection = GetSelectedItem(Request.QueryString["Course"], Request.QueryString["Module"], Request.QueryString["Activity"]);
+					//switch (item.GetType().ToString())
+					//{
+					//	case "Course":
+					//		selection  = ((LexiconLMS.Models.Course)item).Description;
+					//		break;
+					//	case "Module":
+					//		selection = ((LexiconLMS.Models.Module)item).Description;
+					//		break;
+					//	case "Activity":
+					//		selection = ((LexiconLMS.Models.Activity)item).Description;
+					//		break;
+					//	default:
+					//		break;
+					//}
+				}
+				<h5>@selection</h5>
 			</div>
 		</div>
 	</div>
@@ -103,7 +136,7 @@
 
 
 		@foreach (var item in Model)
-	{
+					{
 			<tr>
 				<td>
 					@Html.DisplayFor(modelItem => item.Name)
