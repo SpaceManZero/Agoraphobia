@@ -75,7 +75,7 @@ namespace LexiconLMS.Controllers
 
 			// Stop Students from logging in if they are not assigned a Course
 			ApplicationUser user = UserManager.FindByEmail(model.Email);
-			if (UserManager.GetRoles(user.Id).Contains("Student") && user.Course == null)
+			if (user != null && UserManager.GetRoles(user.Id).Contains("Student") && user.Course == null)
 			{
 				ModelState.AddModelError("", "Login canceled. You are currently not assigned to any Course.");
 				return View(model);
