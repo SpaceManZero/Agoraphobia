@@ -1,0 +1,105 @@
+﻿@model LexiconLMS.Controllers.UsersAndRoles
+
+<h3>Teachers</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            <b>Email</b>
+        </th>
+        <th>
+            <b>Name</b>
+        </th>
+		<th></th>
+    </tr>
+@if (Model != null && Model.Users != null && Model.Roles != null)
+{
+	foreach (var item in Model.Users.Where(u => u.Roles.FirstOrDefault().RoleId == Model.Roles.Where(r => r.Name == "Teacher").FirstOrDefault().Id).ToList()) {
+	<tr>
+		<td>
+			@Html.DisplayFor(modelItem => item.Email)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.UserName)
+		</td>
+		<td>
+			@if (User.IsInRole("Teacher"))
+			{
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id }, null) <span>|</span>
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id }, null)
+			}
+		</td>
+	</tr>
+	}
+}
+	@if (User.IsInRole("Teacher"))
+	{
+		<tr>
+			<td>
+				@Html.ActionLink("Add user", "Register", "Account", new { Teacher = true }, null)
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+	}
+
+</table>
+
+<h3>Students</h3>
+<table class="table">
+	<tr>
+		<th>
+			<b>Email</b>
+		</th>
+		<th>
+			<b>Name</b>
+		</th>
+		<th>
+			<b>Course</b>
+		</th>
+		<th></th>
+	</tr>
+	@if (Model != null && Model.Users != null && Model.Roles != null)
+	{
+		foreach (var item in Model.Users.Where(u => u.Roles.FirstOrDefault().RoleId == Model.Roles.Where(r => r.Name == "Student").FirstOrDefault().Id).ToList())
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Email)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.UserName)
+				</td>
+				<td>
+					@if (item.Course != null)
+					{
+						@Html.ActionLink(item.Course.Name, "Index", "Courses", new { Course = item.Course.Id }, null);
+					}
+					else
+					{
+						<p>Unassigned</p>
+					}
+				</td>
+				<td>
+					@if (User.IsInRole("Teacher"))
+					{
+						@Html.ActionLink("Edit", "Edit", new { id = item.Id }, null) <span>|</span>
+						@Html.ActionLink("Delete", "Delete", new { id = item.Id }, null)
+					}
+				</td>
+			</tr>
+		}
+	}
+	@if (User.IsInRole("Teacher"))
+	{
+		<tr>
+			<td>
+				@Html.ActionLink("Add user", "Register", "Account", new { Teacher = false }, null)
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	}
+
+</table>

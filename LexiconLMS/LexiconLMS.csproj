@@ -274,9 +274,8 @@
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Activities\Edit.cshtml" />
     <Content Include="Views\Activities\Index.cshtml" />
-    <Content Include="Views\Account\List.cshtml" />
-    <Content Include="Views\Account\_ListOfTeachers.cshtml" />
-    <Content Include="Views\Account\_ListOfStudents.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Courses\_Information.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,11 +23,12 @@
                 <ul class="nav navbar-nav">
 					@if(User.IsInRole("Teacher"))
 					{
-						<li>@Html.ActionLink("User Management", "List", "Account")</li>
+						<li>@Html.ActionLink("User Management", "Index", "Account")</li>
 						<li>@Html.ActionLink("Course Management", "Index", "Courses")</li>
 					}
 					@if (User.IsInRole("Student"))
 					{
+						<li>@Html.ActionLink("Contactlist", "Index", "Account")</li>
 						<li>@Html.ActionLink("Course", "Index", "Courses")</li>
 					}
                 </ul>

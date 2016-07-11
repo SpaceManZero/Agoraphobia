@@ -1,0 +1,45 @@
+﻿@model IEnumerable<LexiconLMS.Models.ApplicationUser>
+
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.UserName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Email)
+		</th>
+		@*<th>
+				@Html.DisplayNameFor(model => model.PhoneNumber)
+			</th>*@
+		<th>
+			@Html.DisplayNameFor(model => model.Course)
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.UserName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Email)
+			</td>
+			@*<td>
+					@Html.DisplayFor(modelItem => item.PhoneNumber)
+				</td>*@
+			<td>
+				@if (item.Course != null)
+				{
+					@Html.ActionLink(item.Course.Name, "Index", "Courses", new { Course = item.Course.Id }, null);
+				}
+				else
+				{
+					<b>N/A</b>
+					@*@Html.ActionLink("Assign Course", "Index", "Account", new { Course = item.Course.Id }, null)*@
+				}
+			</td>
+		</tr>
+	}
+</table>

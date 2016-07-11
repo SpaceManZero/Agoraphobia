@@ -11,11 +11,62 @@ using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
+	public class ItemInformation
+	{
+		public Course Course { get; set; }
+		public IEnumerable<Module> Modules { get; set; }
+		public IEnumerable<Activity> Activities { get; set; }
+	}
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Courses
+		// GET: Courses/_Information
+		[Authorize]
+		public ActionResult _Information(string _courseId, string _moduleId, string _activityId)
+		{
+			int courseId = -1;
+			int moduleId = -1;
+			int activityId = -1;
+			try
+			{
+				courseId = Convert.ToInt32(_courseId);
+				moduleId = Convert.ToInt32(_moduleId);
+				activityId = Convert.ToInt32(_activityId);
+			}
+			catch (Exception)
+			{
+			}
+			
+			ItemInformation model = new ItemInformation();
+			if (courseId > -1)
+			{
+				model.Course = db.Courses.Where(c => c.Id == courseId).FirstOrDefault();
+			}
+			if (moduleId > -1)
+			{
+				model.Modules = db.Modules.Where(m => m.Id == moduleId);
+			}
+			else
+			{
+				model.Modules = db.Modules.Where(m => m.Course.Id == courseId);
+			}
+			if (activityId > -1)
+			{
+				model.Activities = db.Activities.Where(m => m.Id == activityId);
+			}
+			else if(moduleId > -1)
+			{
+				model.Activities = db.Activities.Where(m => m.Module.Id == moduleId);
+			}
+			else
+			{
+				model.Activities = db.Activities.Where(a => a.Module.Course.Id == courseId);
+			}
+			return PartialView(model);
+		}
+
+		// GET: Courses
 		[Authorize]
         public ActionResult Index()
         {
@@ -24,7 +75,7 @@ namespace LexiconLMS.Controllers
 				Course course = db.Users.Find(User.Identity.GetUserId()).Course;
 				if (course != null)
 				{
-					return View(db.Courses.ToList<Course>().Where((c => c.Id == course.Id)));
+					return View(db.Courses.ToList<Course>().Where(c => c.Id == course.Id));
 				}
 				return View(new List<Course>());
 			}
@@ -37,13 +88,13 @@ namespace LexiconLMS.Controllers
 		// GET: Courses/Details/5
 		[Authorize]
 		public ActionResult Details(int? id)
-        {
+    {
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
 			if (AllowAccessToCourse(id))
 			{
-				if (id == null)
-				{
-					return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-				}
 				Course course = db.Courses.Find(id);
 				if (course == null)
 				{

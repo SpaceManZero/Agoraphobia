@@ -19,14 +19,6 @@
 			}
 
 			return collapsed;
-
-			//if (Request.QueryString.Keys.Count > 0 &&
-			//	Request.QueryString.Keys[0] == type &&
-			//	Request.QueryString[Request.QueryString.Keys[0]] == id.ToString())
-			//{
-			//	return "in";
-			//}
-			//return "out";
 		}
 
 		string GetSelectedItem(string courseId = null, string moduleId = null, string activityId = null)
@@ -63,7 +55,6 @@
 				<h3>
 					<a data-toggle="collapse" href="#collapseCourse@(course.Id)">
 						@Html.ActionLink(course.Name, "Index", "Courses", new { Course = course.Id }, null)
-						@*@Html.DisplayFor(modelItem => course.Name)*@
                     </a>
 				</h3>
 				<div id="collapseCourse@(course.Id)" class="collapse @IsCollapsed("Course", course.Id)">
@@ -73,7 +64,6 @@
 						<h4>
 							<a data-toggle="collapse" href="#collapseModule@(module.Id)">
 								@Html.ActionLink(module.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id }, null)
-								@*@Html.DisplayFor(modelItem => module.Name)*@
 							</a>
 						</h4>
 						<div id="collapseModule@(module.Id)" class="collapse @IsCollapsed("Module", module.Id)">
@@ -82,7 +72,6 @@
 							{
 								<h6>
 									@Html.ActionLink(activity.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id, Activity = activity.Id }, null)
-									@*@Html.DisplayFor(modelItem => activity.Name)*@
 								</h6>
 							}
 						</div>
@@ -92,23 +81,10 @@
 		</div>
 		<div class="panel, col-lg-8">
 			<div class="panel">
+				@Html.Partial("_Information")
 				@{
 					string selection = ""; ;
 					selection = GetSelectedItem(Request.QueryString["Course"], Request.QueryString["Module"], Request.QueryString["Activity"]);
-					//switch (item.GetType().ToString())
-					//{
-					//	case "Course":
-					//		selection  = ((LexiconLMS.Models.Course)item).Description;
-					//		break;
-					//	case "Module":
-					//		selection = ((LexiconLMS.Models.Module)item).Description;
-					//		break;
-					//	case "Activity":
-					//		selection = ((LexiconLMS.Models.Activity)item).Description;
-					//		break;
-					//	default:
-					//		break;
-					//}
 				}
 				<h5>@selection</h5>
 			</div>
