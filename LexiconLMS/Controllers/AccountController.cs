@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LexiconLMS.Models;
+//using System.Data.Entity.Core.Objects;
 
 namespace LexiconLMS.Controllers
 {
@@ -50,6 +51,15 @@ namespace LexiconLMS.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        //
+        // GET: /Account/Index
+        [Authorize]
+        public ActionResult Index()
+        {
+            //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new Microsoft.AspNet.Identity.EntityFramework.RoleStore<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new ApplicationDbContext()));
+            return View("Index", UserManager.Users.ToList().OrderBy(i => i.Roles.First().RoleId));
         }
 
         //

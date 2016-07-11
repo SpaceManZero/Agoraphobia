@@ -1,0 +1,59 @@
+﻿@model IEnumerable<LexiconLMS.Models.ApplicationUser>
+
+<h2>Members</h2>
+
+@if (User.IsInRole("Teacher"))
+{
+<p>
+    @Html.ActionLink("Add user", "Create")
+</p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            <b>Position</b>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Roles.FirstOrDefault().RoleId)
+        </td>
+        <td>
+            @if (item.Course != null)
+            {
+                @Html.ActionLink(item.Course.Name, "Index", "Courses", new { Course = item.Course.Id }, null);
+            }
+            else
+            {
+                <b>N/A</b>
+            }
+        </td>
+        @if (User.IsInRole("Teacher"))
+        {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+        }
+    </tr>
+}
+
+</table>
