@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LexiconLMS.Models;
+using System.Collections;
 
 namespace LexiconLMS.Controllers
 {
@@ -18,7 +19,7 @@ namespace LexiconLMS.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+		public AccountController()
         {
         }
 
@@ -26,7 +27,7 @@ namespace LexiconLMS.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
-        }
+		}
 
         public ApplicationSignInManager SignInManager
         {
@@ -74,8 +75,8 @@ namespace LexiconLMS.Controllers
             }
 
 			// Stop Students from logging in if they are not assigned a Course
-			ApplicationUser user = UserManager.FindByEmail(model.Email);
-			if (UserManager.GetRoles(user.Id).Contains("Student") && user.Course == null)
+			ApplicationUser accessingUser = UserManager.FindByEmail(model.Email);
+			if (UserManager.GetRoles(accessingUser.Id).Contains("Student") && accessingUser.Course == null)
 			{
 				ModelState.AddModelError("", "Login canceled. You are currently not assigned to any Course.");
 				return View(model);
@@ -153,7 +154,8 @@ namespace LexiconLMS.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+		[Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -165,7 +167,7 @@ namespace LexiconLMS.Controllers
                 {
                     var createdUser = UserManager.FindByEmail(model.Email);
                     UserManager.AddToRole(createdUser.Id, model.Teacher ? "Teacher" : "Student");
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -173,7 +175,7 @@ namespace LexiconLMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List", "Account");
                 }
                 AddErrors(result);
             }
@@ -413,7 +415,7 @@ namespace LexiconLMS.Controllers
             return View();
         }
 
-        protected override void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

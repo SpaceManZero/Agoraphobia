@@ -12,7 +12,6 @@ namespace LexiconLMS.Models
 		
 		/// <summary>
 		/// The Course a User of Role Student is signed up to
-		/// TODO: Limit ability to set a Course to Users of Role Student in 'set'
 		/// </summary>
 		public virtual Course Course { get; set; }
 
@@ -45,5 +44,7 @@ namespace LexiconLMS.Models
 		public System.Data.Entity.DbSet<LexiconLMS.Models.Activity> Activities { get; set; }
 
 		public System.Data.Entity.DbSet<LexiconLMS.Models.ActivityType> ActivityTypes { get; set; }
+
+		//public System.Data.Entity.DbSet<LexiconLMS.Models.ApplicationUser> ApplicationUsers { get; set; }
 	}
 }
