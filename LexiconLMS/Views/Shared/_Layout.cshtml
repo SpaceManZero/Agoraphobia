@@ -16,10 +16,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 @*@Html.ActionLink("LexiconLMS", "Index", "Course", new { area = "" }, new { @class = "navbar-brand" })*@
 				<a href="@Url.Action("Index", "Courses")" area = "" class = "navbar-brand">
-					<img src="@Url.Content("~/Content/img/imgname.jpg")" />
+					<img src="@Url.Content("~/images/logo-lexicon.gif")" />
 				</a>
             </div>
             <div class="navbar-collapse collapse">
@@ -43,7 +44,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - LexiconLMS</p>
+            <p>&copy; @DateTime.Now.Year - LexiconLMS carefully crafted by Thomas &amp; Mich</p>
         </footer>
     </div>
 
