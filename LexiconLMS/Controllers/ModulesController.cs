@@ -10,7 +10,19 @@ using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
-    public class ModulesController : Controller
+	public class CourseCoreInfo
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+	}
+
+	public class ModuleCreationInfo
+	{
+		public IEnumerable<CourseCoreInfo> CourseInfo { get; set; }
+		public Module Module { get; set; }
+	}
+
+	public class ModulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -35,10 +47,15 @@ namespace LexiconLMS.Controllers
             return View(module);
         }
 
-        // GET: Modules/Create
-        public ActionResult Create()
+		// GET: Modules/Create
+		[Authorize(Roles = "Teacher")]
+		public ActionResult Create()
         {
-            return View();
+			IEnumerable<CourseCoreInfo> courseList = db.Courses.Select(c => new CourseCoreInfo { Id = c.Id, Name = c.Name }).ToList();
+			ModuleCreationInfo model = new ModuleCreationInfo();
+			model.CourseInfo = courseList;
+
+			return View(model);
         }
 
         // POST: Modules/Create
@@ -46,16 +63,17 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Module module)
+		[Authorize(Roles = "Teacher")]
+        public ActionResult Create([Bind(Include = "Module.Id,Module.Course,Module.Name,Module.Description,Module.StartDate,Module.EndDate")] ModuleCreationInfo moduleCreationInfo)
         {
             if (ModelState.IsValid)
             {
-                db.Modules.Add(module);
+                db.Modules.Add(moduleCreationInfo.Module);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Courses", new { Course = moduleCreationInfo.Module.Course, Module = moduleCreationInfo.Module.Id });
             }
 
-            return View(module);
+            return View(moduleCreationInfo);
         }
 
         // GET: Modules/Edit/5
