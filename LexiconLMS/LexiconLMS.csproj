@@ -192,6 +192,14 @@
     <Compile Include="Migrations\201607041206599_Added_ModulesAndActivities.Designer.cs">
       <DependentUpon>201607041206599_Added_ModulesAndActivities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607121325254_Added_Parent_IDs_To_Moduel_and_Activity.cs" />
+    <Compile Include="Migrations\201607121325254_Added_Parent_IDs_To_Moduel_and_Activity.Designer.cs">
+      <DependentUpon>201607121325254_Added_Parent_IDs_To_Moduel_and_Activity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.cs" />
+    <Compile Include="Migrations\201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.Designer.cs">
+      <DependentUpon>201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -302,6 +310,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607041206599_Added_ModulesAndActivities.resx">
       <DependentUpon>201607041206599_Added_ModulesAndActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607121325254_Added_Parent_IDs_To_Moduel_and_Activity.resx">
+      <DependentUpon>201607121325254_Added_Parent_IDs_To_Moduel_and_Activity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.resx">
+      <DependentUpon>201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
