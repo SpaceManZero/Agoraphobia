@@ -10,7 +10,14 @@ using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
-    public class ActivitiesController : Controller
+	public class ModuleCoreInfo
+	{
+		public int Id { get; set; }
+		public int CourseId { get; set; }
+		public string Name { get; set; }
+	}
+
+	public class ActivitiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -38,7 +45,13 @@ namespace LexiconLMS.Controllers
         // GET: Activities/Create
         public ActionResult Create()
         {
-            return View();
+			IEnumerable<CourseCoreInfo> courseList = db.Courses.Select(c => new CourseCoreInfo { Id = c.Id, Name = c.Name }).ToList();
+			ViewBag.CourseBaseInfo = courseList;
+			IEnumerable<ModuleCoreInfo> moduleList = db.Modules.Select(c => new ModuleCoreInfo { Id = c.Id, Name = c.Name, CourseId = c.Id }).ToList();
+			ViewBag.ModuleBaseInfo = courseList;
+			IEnumerable<ActivityType> typeList = db.ActivityTypes.ToList();
+			ViewBag.ActivityType = typeList;
+			return View();
         }
 
         // POST: Activities/Create
@@ -46,11 +59,13 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,CourseId,ModuleId,Name,Type,Description,StartDate,EndDate")] Activity activity)
         {
             if (ModelState.IsValid)
             {
-                db.Activities.Add(activity);
+				activity.Module = db.Modules.FirstOrDefault(m => m.Id == activity.ModuleId);
+
+				db.Activities.Add(activity);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

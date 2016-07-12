@@ -16,12 +16,6 @@ namespace LexiconLMS.Controllers
 		public string Name { get; set; }
 	}
 
-	public class ModuleCreationInfo
-	{
-		public IEnumerable<CourseCoreInfo> CourseInfo { get; set; }
-		public Module Module { get; set; }
-	}
-
 	public class ModulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -52,10 +46,9 @@ namespace LexiconLMS.Controllers
 		public ActionResult Create()
         {
 			IEnumerable<CourseCoreInfo> courseList = db.Courses.Select(c => new CourseCoreInfo { Id = c.Id, Name = c.Name }).ToList();
-			ModuleCreationInfo model = new ModuleCreationInfo();
-			model.CourseInfo = courseList;
+			ViewBag.CourseBaseInfo = courseList;
 
-			return View(model);
+			return View(new Module());
         }
 
         // POST: Modules/Create
@@ -64,16 +57,17 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 		[Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "Module.Id,Module.Course,Module.Name,Module.Description,Module.StartDate,Module.EndDate")] ModuleCreationInfo moduleCreationInfo)
+        public ActionResult Create([Bind(Include = "Id,CourseId,Name,Description,StartDate,EndDate")] Module module)
         {
             if (ModelState.IsValid)
             {
-                db.Modules.Add(moduleCreationInfo.Module);
+				module.Course = db.Courses.FirstOrDefault(c => c.Id == module.CourseId);
+				db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Courses", new { Course = moduleCreationInfo.Module.Course, Module = moduleCreationInfo.Module.Id });
+                return RedirectToAction("Index", "Courses", new { Course = module.CourseId, Module = module.Id });
             }
 
-            return View(moduleCreationInfo);
+            return RedirectToAction("Create");
         }
 
         // GET: Modules/Edit/5

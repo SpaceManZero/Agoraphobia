@@ -63,7 +63,7 @@ namespace LexiconLMS.Migrations
 			context.Courses.AddOrUpdate(o => o.Name, new Course
 			{
 				Name = ".NET Intro",
-				Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi. Sed iaculis dictum arcu eu interdum.",
+				Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum semper dapibus dui. Aliquam vehicula sapien mauris, vel interdum elit pharetra quis. Nulla facilisi. Sed iaculis dictum arcu eu interdum.",
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today.AddMonths(1)
 			});
@@ -85,6 +85,7 @@ namespace LexiconLMS.Migrations
 				Description = "Duis ac felis commodo, tempor urna sed, hendrerit ipsum. Phasellus porttitor, quam vitae tincidunt laoreet, nulla tortor ornare magna, eu tristique eros diam sed nibh. Suspendisse vitae tortor magna.",
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today.AddDays(15),
+				CourseId = course1.Id,
 				Course = course1
 			});
 			context.Modules.AddOrUpdate(o => o.Name, new Module
@@ -93,6 +94,7 @@ namespace LexiconLMS.Migrations
 				Description = "Duis ac felis commodo, tempor urna sed, hendrerit ipsum. Phasellus porttitor, quam vitae tincidunt laoreet, nulla tortor ornare magna, eu tristique eros diam sed nibh. Suspendisse vitae tortor magna.",
 				StartDate = DateTime.Today.AddDays(16),
 				EndDate = DateTime.Today.AddMonths(1),
+				CourseId = course1.Id,
 				Course = course1
 			});
 			context.Modules.AddOrUpdate(o => o.Name, new Module
@@ -101,6 +103,7 @@ namespace LexiconLMS.Migrations
 				Description = "Duis ac felis commodo, tempor urna sed, hendrerit ipsum. Phasellus porttitor, quam vitae tincidunt laoreet, nulla tortor ornare magna, eu tristique eros diam sed nibh. Suspendisse vitae tortor magna.",
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today.AddDays(15),
+				CourseId = course2.Id,
 				Course = course2
 			});
 			context.SaveChanges();
@@ -116,6 +119,7 @@ namespace LexiconLMS.Migrations
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today,
 				Type = lecture,
+				ModuleId = module1.Id,
 				Module = module1
 			});
 			context.Activities.AddOrUpdate(o => o.Name, new Activity
@@ -125,6 +129,7 @@ namespace LexiconLMS.Migrations
 				StartDate = DateTime.Today.AddDays(1),
 				EndDate = DateTime.Today.AddDays(1),
 				Type = lecture,
+				ModuleId = module1.Id,
 				Module = module1
 			});
 			context.Activities.AddOrUpdate(o => o.Name, new Activity
@@ -134,6 +139,7 @@ namespace LexiconLMS.Migrations
 				StartDate = DateTime.Today.AddDays(16),
 				EndDate = DateTime.Today.AddDays(16),
 				Type = lecture,
+				ModuleId = module2.Id,
 				Module = module2
 			});
 			context.Activities.AddOrUpdate(o => o.Name, new Activity
@@ -143,6 +149,7 @@ namespace LexiconLMS.Migrations
 				StartDate = DateTime.Today.AddDays(17),
 				EndDate = DateTime.Today.AddDays(17),
 				Type = assignment,
+				ModuleId = module2.Id,
 				Module = module2
 			});
 			context.Activities.AddOrUpdate(o => o.Name, new Activity
@@ -152,6 +159,7 @@ namespace LexiconLMS.Migrations
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today.AddDays(2),
 				Type = elearning,
+				ModuleId = module3.Id,
 				Module = module3
 			});
 			context.SaveChanges();
