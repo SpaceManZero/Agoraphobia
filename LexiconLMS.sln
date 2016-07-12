@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconLMS", "LexiconLMS\Le
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconLMS.Tests", "LexiconLMS.Tests\LexiconLMS.Tests.csproj", "{4784217A-30A6-48DB-8E87-2D59925E8A80}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{128D36B7-4686-4A3F-8AAE-55245DFE6D82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
