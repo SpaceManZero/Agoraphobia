@@ -57,3 +57,78 @@ textarea {
 .navbar-custom a {
     color: #fff;
 }
+
+.navbar-fixed-top a:link, a:visited {
+    color: white;
+}
+.navbar-nav a:link, a:visited {
+    color: white;
+}
+
+.CreationLinks {
+    font-size: larger;
+    /*text-align: center;*/
+    margin-left: 5px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.CreationLinks a {
+    color: black;
+}
+.courseBlock {
+    margin-top: 0px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.courseBlock a:link, a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.courseBlock h3 {
+    margin-top: 0px;
+    padding-top: 15px;
+}
+.courseBlock h4 {
+    margin: 0px;
+    margin-left: 2px;
+    padding: 6px;
+    padding-bottom: 0px;
+    border-left: 1px solid red;
+}
+.courseBlock h5 {
+    margin: 0px;
+    margin-left: 12px;
+    padding: 6px;
+    padding-bottom: 0px;
+    border-left: 1px solid red;
+}
+
+._information {
+    margin: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    /*border-right: 1px solid red;*/
+    border-bottom: 1px solid red;
+}
+._information h3 {
+    padding: 0px;
+    margin: 0px;
+    border-bottom: 1px solid red;
+}
+.ToFromDate {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+}
+._information article {
+    margin-top: 10px;
+    -ms-text-justify: auto;
+    text-justify: auto ;
+}

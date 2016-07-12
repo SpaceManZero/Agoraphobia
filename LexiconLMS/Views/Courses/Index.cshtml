@@ -1,140 +1,69 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Course>
 
-	@functions{
-		string IsCollapsed(string type, int id)
+@functions{
+	string IsCollapsed(string type, int id)
+	{
+		string collapsed = "out";
+		if (Request.QueryString.Keys.Count > 0)
 		{
-			string collapsed = "out";
-			if (Request.QueryString.Keys.Count > 0)
+			var courseId = Request.QueryString["Course"];
+			var moduleId = Request.QueryString["Module"];
+			var activityId = Request.QueryString["Activity"];
+
+			if ((type == "Course" && courseId == id.ToString()) ||
+				(type == "Module" && moduleId == id.ToString()) ||
+				(type == "Activity" && activityId == id.ToString()))
 			{
-				var courseId = Request.QueryString["Course"];
-				var moduleId = Request.QueryString["Module"];
-				var activityId = Request.QueryString["Activity"];
-
-				if ((type == "Course" && courseId == id.ToString()) ||
-					(type == "Module" && moduleId == id.ToString()) ||
-					(type == "Activity" && activityId == id.ToString()))
-				{
-					collapsed = "in";
-				}
+				collapsed = "in";
 			}
-
-			return collapsed;
 		}
-
-		string GetSelectedItem(string courseId = null, string moduleId = null, string activityId = null)
-		{
-			string selection = "";
-
-			if (courseId != null && moduleId == null && activityId == null)
-			{
-				var course = Model.FirstOrDefault(q => q.Id.ToString() == courseId);
-				selection = course.Description;
-			}
-			if (courseId != null && moduleId != null && activityId == null)
-			{
-				var module = Model.FirstOrDefault(q => q.Id.ToString() == courseId).Modules.FirstOrDefault(q => q.Id.ToString() == moduleId);
-				selection = module.Description;
-			}
-			if (courseId != null && moduleId != null && activityId != null)
-			{
-				var activity = Model.FirstOrDefault(q => q.Id.ToString() == courseId).Modules.FirstOrDefault(q => q.Id.ToString() == moduleId).Activities.FirstOrDefault(q => q.Id.ToString() == activityId);
-				selection = activity.Description;
-			}
-
-			return selection;
-		}
+		return collapsed;
+	}
 }
 
 <div class="container">
 	<div class="row">
-		<div class="col-lg-4">
-			<h3>Course(s)</h3>
-			@foreach (var course in Model)
-			{
-
-				<h3>
-					<a data-toggle="collapse" href="#collapseCourse@(course.Id)">
-						@Html.ActionLink(course.Name, "Index", "Courses", new { Course = course.Id }, null)
-                    </a>
-				</h3>
-				<div id="collapseCourse@(course.Id)" class="collapse @IsCollapsed("Course", course.Id)">
-
-					@foreach (var module in Model.FirstOrDefault(c => c.Id == course.Id).Modules)
-					{
-						<h4>
-							<a data-toggle="collapse" href="#collapseModule@(module.Id)">
-								@Html.ActionLink(module.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id }, null)
-							</a>
-						</h4>
-						<div id="collapseModule@(module.Id)" class="collapse @IsCollapsed("Module", module.Id)">
-
-							@foreach (var activity in Model.FirstOrDefault(c => c.Id == course.Id).Modules.FirstOrDefault(m => m.Id == module.Id).Activities)
-							{
-								<h6>
-									@Html.ActionLink(activity.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id, Activity = activity.Id }, null)
-								</h6>
-							}
-						</div>
-					}
-				</div>
-			}
+		<div class="leftColumn, col-lg-2">
+            @if (User.IsInRole("Teacher"))
+            {
+                <div class="CreationLinks">
+                    <div>@Html.ActionLink("Add new Course", "Create", "Courses")</div>
+                    <div>@Html.ActionLink("Add new Module", "Create", "Modules")</div>
+                    <div>@Html.ActionLink("Add new Activity", "Create", "Activities")</div>
+                </div>
+            }
+            <div class="courseBlock">
+                @foreach (var course in Model)
+                {
+                    <h3>
+                        <a data-toggle="collapse" href="#collapseCourse@(course.Id)">
+                            @Html.ActionLink(course.Name, "Index", "Courses", new { Course = course.Id }, null)
+                        </a>
+                    </h3>
+                    <div id="collapseCourse@(course.Id)" class="collapse @IsCollapsed("Course", course.Id)">
+                        @foreach (var module in Model.FirstOrDefault(c => c.Id == course.Id).Modules)
+                        {
+                            <h4>
+                                <a data-toggle="collapse" href="#collapseModule@(module.Id)">
+                                    @Html.ActionLink(module.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id }, null)
+                                </a>
+                            </h4>
+                            <div id="collapseModule@(module.Id)" class="collapse @IsCollapsed("Module", module.Id)">
+                                @foreach (var activity in Model.FirstOrDefault(c => c.Id == course.Id).Modules.FirstOrDefault(m => m.Id == module.Id).Activities)
+                                {
+                                    <h5>
+                                        @Html.ActionLink(activity.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id, Activity = activity.Id }, null)
+                                    </h5>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
 		</div>
 		<div class="panel, col-lg-8">
-			<div class="panel">
-				@Html.Partial("_Information")
-				@{
-					string selection = ""; ;
-					selection = GetSelectedItem(Request.QueryString["Course"], Request.QueryString["Module"], Request.QueryString["Activity"]);
-				}
-				<h5>@selection</h5>
-			</div>
+			@Html.Action("_Information")
 		</div>
+        <div class="panel, col-lg-2"></div>
 	</div>
-
-
 </div>
-	@*<table class="table">
-			<tr>
-				<th>
-					@Html.DisplayNameFor(model => model.Name)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Description)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.StartDate)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.EndDate)
-				</th>
-				<th></th>
-			</tr>
-
-
-		@foreach (var item in Model)
-					{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Name)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Description)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.StartDate)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.EndDate)
-				</td>
-				<td>
-					@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-					@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-					@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-				</td>
-			</tr>
-		}
-		</table>*@
-
-
-
-

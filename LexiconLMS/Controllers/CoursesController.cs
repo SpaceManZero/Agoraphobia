@@ -13,57 +13,77 @@ namespace LexiconLMS.Controllers
 {
 	public class ItemInformation
 	{
-		public Course Course { get; set; }
+        public enum Selection
+        {
+            Course,
+            Module,
+            Activity
+        }
+        public Selection Type { get; set; }
+        public Course Course { get; set; }
 		public IEnumerable<Module> Modules { get; set; }
 		public IEnumerable<Activity> Activities { get; set; }
 	}
+
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
 		// GET: Courses/_Information
 		[Authorize]
-		public ActionResult _Information(string _courseId, string _moduleId, string _activityId)
+		public ActionResult _Information(string Course, string Module, string Activity)
 		{
-			int courseId = -1;
-			int moduleId = -1;
-			int activityId = -1;
-			try
+			int _courseId = -1;
+			int _moduleId = -1;
+			int _activityId = -1;
+            if (Course != null)
+            {
+                try { _courseId = Convert.ToInt32(Course); }
+                catch (Exception) { }
+            }
+            if (Module != null)
+            {
+                try { _moduleId = Convert.ToInt32(Module); }
+                catch (Exception) { }
+            }
+            if (Activity != null)
+            {
+                try { _activityId = Convert.ToInt32(Activity); }
+                catch (Exception) { }
+            }
+
+            ItemInformation model = new ItemInformation();
+			if (_courseId > -1)
 			{
-				courseId = Convert.ToInt32(_courseId);
-				moduleId = Convert.ToInt32(_moduleId);
-				activityId = Convert.ToInt32(_activityId);
+				model.Course = db.Courses.Where(c => c.Id == _courseId).FirstOrDefault();       // Pick the selected course
+                model.Type = ItemInformation.Selection.Course;
+
+            }
+
+			if (_moduleId > -1)
+			{
+				model.Modules = db.Modules.Where(m => m.Id == _moduleId);                       // Pick the selected module
+                model.Type = ItemInformation.Selection.Module;
+            }
+			else
+			{
+				model.Modules = db.Modules.Where(m => m.Course.Id == _courseId);                // List all modules under the selected course
 			}
-			catch (Exception)
+
+			if (_activityId > -1)
 			{
-			}
-			
-			ItemInformation model = new ItemInformation();
-			if (courseId > -1)
+				model.Activities = db.Activities.Where(m => m.Id == _activityId);               // Pick the selected activity
+                model.Type = ItemInformation.Selection.Activity;
+            }
+			else if(_moduleId > -1)
 			{
-				model.Course = db.Courses.Where(c => c.Id == courseId).FirstOrDefault();
-			}
-			if (moduleId > -1)
-			{
-				model.Modules = db.Modules.Where(m => m.Id == moduleId);
+				model.Activities = db.Activities.Where(m => m.Module.Id == _moduleId);          // List all activities under the selected module
 			}
 			else
 			{
-				model.Modules = db.Modules.Where(m => m.Course.Id == courseId);
+				model.Activities = db.Activities.Where(a => a.Module.Course.Id == _courseId);   // List all activities under the selected course
 			}
-			if (activityId > -1)
-			{
-				model.Activities = db.Activities.Where(m => m.Id == activityId);
-			}
-			else if(moduleId > -1)
-			{
-				model.Activities = db.Activities.Where(m => m.Module.Id == moduleId);
-			}
-			else
-			{
-				model.Activities = db.Activities.Where(a => a.Module.Course.Id == courseId);
-			}
-			return PartialView(model);
+			return PartialView("_Information", model);
 		}
 
 		// GET: Courses

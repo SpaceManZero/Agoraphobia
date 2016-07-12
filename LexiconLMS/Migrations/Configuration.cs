@@ -45,41 +45,6 @@ namespace LexiconLMS.Migrations
 			}
 			context.SaveChanges();
 
-			// Add some users
-			var uStore = new UserStore<ApplicationUser>(context);
-			var uManager = new UserManager<ApplicationUser>(uStore);
-			// Add a teacher
-			if (!context.Users.Any(u => u.Email == "teacher001@lexicon.se"))
-			{
-				var user = new ApplicationUser { UserName = "teacher001@lexicon.se", Email = "teacher001@lexicon.se" };
-				uManager.Create(user, "Teacher_001");
-				user = uManager.FindByEmail("teacher001@lexicon.se");
-				uManager.AddToRole(user.Id, "Teacher");
-				context.SaveChanges();
-			}
-			// Add a student
-			if (!context.Users.Any(u => u.Email == "student001@lexicon.se"))
-			{
-				var user = new ApplicationUser { UserName = "student001@lexicon.se", Email = "student001@lexicon.se" };
-				uManager.Create(user, "Student_001");
-				user = uManager.FindByEmail("student001@lexicon.se");
-				uManager.AddToRole(user.Id, "Student");
-				context.SaveChanges();
-			}
-
-			// Add another student
-			if (!context.Users.Any(u => u.Email == "student002@lexicon.se"))
-			{
-                //Användarnamnet för studenten
-                var user = new ApplicationUser { UserName = "student002@lexicon.se", Email = "student002@lexicon.se" };
-                user.Course = context.Courses.FirstOrDefault(c => c.Name == ".NET Intro");
-                //Lösenord för studenten
-				uManager.Create(user, "Student_002");
-				user = uManager.FindByEmail("student002@lexicon.se");
-				uManager.AddToRole(user.Id, "Student");
-				context.SaveChanges();
-			}
-
 			// Add ActivityTypes NOTE: THIS SHOULD BE PART OF DB INITIALIZATION
 			context.ActivityTypes.AddOrUpdate(new ActivityType { Type = "Lecture" });
 			context.ActivityTypes.AddOrUpdate(new ActivityType { Type = "E-Learning" });
@@ -94,8 +59,14 @@ namespace LexiconLMS.Migrations
 			ActivityType assignment = context.ActivityTypes.FirstOrDefault(c => c.Type == "Assignment");
 
 			// Add course(s)
-			context.Courses.AddOrUpdate(new Course { Name = ".NET Intro", Description = "Intro to .NET", StartDate = DateTime.Today, EndDate = DateTime.Today.AddMonths(1) });
-			context.Courses.AddOrUpdate(new Course { Name = "Java Intro", Description = "Intro to Java", StartDate = DateTime.Today, EndDate = DateTime.Today.AddMonths(1) });
+			context.Courses.AddOrUpdate(new Course { Name = ".NET Intro",
+                                                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi. Sed iaculis dictum arcu eu interdum.",
+                                                    StartDate = DateTime.Today,
+                                                    EndDate = DateTime.Today.AddMonths(1) });
+			context.Courses.AddOrUpdate(new Course { Name = "Java Intro",
+                                                    Description = "Duis ac felis commodo, tempor urna sed, hendrerit ipsum. Phasellus porttitor, quam vitae tincidunt laoreet, nulla tortor ornare magna, eu tristique eros diam sed nibh. Suspendisse vitae tortor magna.",
+                                                    StartDate = DateTime.Today,
+                                                    EndDate = DateTime.Today.AddMonths(1) });
 			context.SaveChanges();
 			// Add Module(s)
 			Course course1 = context.Courses.FirstOrDefault(c => c.Name == ".NET Intro");
@@ -114,6 +85,43 @@ namespace LexiconLMS.Migrations
 			context.Activities.AddOrUpdate(new Activity { Name = "Parking Garage 1.0", Description = "yu8oihjkyui", StartDate = DateTime.Today.AddDays(17), EndDate = DateTime.Today.AddDays(17), Type = assignment, Module = module2 });
 			context.Activities.AddOrUpdate(new Activity { Name = "Java Programing", Description = "yu8oihjkyui", StartDate = DateTime.Today, EndDate = DateTime.Today.AddDays(2), Type = eleraning, Module = module3 });
 			context.SaveChanges();
-		}
+
+            // Add some users
+            var uStore = new UserStore<ApplicationUser>(context);
+            var uManager = new UserManager<ApplicationUser>(uStore);
+            // Add a teacher
+            if (!context.Users.Any(u => u.Email == "teacher001@lexicon.se"))
+            {
+                var user = new ApplicationUser { UserName = "teacher001@lexicon.se", Email = "teacher001@lexicon.se" };
+                uManager.Create(user, "Teacher_001");
+                user = uManager.FindByEmail("teacher001@lexicon.se");
+                uManager.AddToRole(user.Id, "Teacher");
+                context.SaveChanges();
+            }
+            // Add a student
+            if (!context.Users.Any(u => u.Email == "student001@lexicon.se"))
+            {
+                var user = new ApplicationUser { UserName = "student001@lexicon.se", Email = "student001@lexicon.se" };
+                user.Course = context.Courses.FirstOrDefault(c => c.Name == ".NET Intro");
+                uManager.Create(user, "Student_001");
+                user = uManager.FindByEmail("student001@lexicon.se");
+                uManager.AddToRole(user.Id, "Student");
+                context.SaveChanges();
+            }
+
+            // Add another student
+            if (!context.Users.Any(u => u.Email == "student002@lexicon.se"))
+            {
+                //Användarnamnet för studenten
+                var user = new ApplicationUser { UserName = "student002@lexicon.se", Email = "student002@lexicon.se" };
+                user.Course = context.Courses.FirstOrDefault(c => c.Name == ".NET Intro");
+                //Lösenord för studenten
+                uManager.Create(user, "Student_002");
+                user = uManager.FindByEmail("student002@lexicon.se");
+                uManager.AddToRole(user.Id, "Student");
+                context.SaveChanges();
+            }
+        }
     }
 }
+//Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi. Sed iaculis dictum arcu eu interdum. Duis ac felis commodo, tempor urna sed, hendrerit ipsum. Phasellus porttitor, quam vitae tincidunt laoreet, nulla tortor ornare magna, eu tristique eros diam sed nibh. Suspendisse vitae tortor magna. Maecenas imperdiet mauris in sollicitudin fermentum. Vivamus rutrum ultricies tellus ac suscipit. Pellentesque et diam nunc. Proin congue mi eget magna rutrum, quis ultrices felis dapibus. Mauris erat lorem, accumsan sit amet felis vitae, suscipit cursus ex.Interdum et malesuada fames ac ante ipsum primis in faucibus.Pellentesque consequat non nunc vitae aliquam. Vivamus mattis aliquam pellentesque.
