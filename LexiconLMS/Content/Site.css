@@ -98,14 +98,14 @@ textarea {
     margin-left: 2px;
     padding: 6px;
     padding-bottom: 0px;
-    border-left: 1px solid red;
+    /*border-left: 1px solid grey;*/
 }
 .courseBlock h5 {
     margin: 0px;
     margin-left: 12px;
     padding: 6px;
     padding-bottom: 0px;
-    border-left: 1px solid red;
+    /*border-left: 1px solid grey;*/
 }
 
 ._information {
@@ -118,6 +118,7 @@ textarea {
 ._information h3 {
     padding: 0px;
     margin: 0px;
+    padding-left: 25px;
     border-bottom: 1px solid red;
 }
 .ToFromDate {
@@ -125,7 +126,16 @@ textarea {
     padding: 0px;
     margin-top: 5px;
     margin-bottom: 5px;
-    
+    text-align: center;
+}
+.Date {
+    float: left;
+}
+.ActivityType {
+    font-weight:bold;
+}
+.studentList {
+    font-style: italic;
 }
 ._information article {
     margin-top: 10px;

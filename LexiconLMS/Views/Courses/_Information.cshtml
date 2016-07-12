@@ -1,61 +1,65 @@
 ﻿@model LexiconLMS.Controllers.ItemInformation
 
-<div class="_information">
     @{
-        string name = "";
-        string timeSpan = "";
-        int studentCount = 0;
-        string studentList = "";
-        string description = "";
+		string name = "";
+		string timeSpan = "";
+		int studentCount = 0;
+		string studentList = "";
+		string description = "";
+		string type = "";
 
-        switch (Model.Type)
-        {
-            case LexiconLMS.Controllers.ItemInformation.Selection.Course:
-                name = Model.Course.Name;
-                timeSpan = Model.Course.StartDate.ToShortDateString() + " - " + Model.Course.EndDate.ToShortDateString();
-                studentCount = Model.Course.Students.Count;
-                foreach (var student in Model.Course.Students)
-                {
-                    studentList += student.UserName + ", ";
-                }
-                description = Model.Course.Description;
-                break;
-            case LexiconLMS.Controllers.ItemInformation.Selection.Module:
-                LexiconLMS.Models.Module module = Model.Modules.FirstOrDefault();
-                name = module.Name;
-                timeSpan = module.StartDate.ToShortDateString() + " - " + module.EndDate.ToShortDateString();
-                description = module.Description;
-                break;
-            case LexiconLMS.Controllers.ItemInformation.Selection.Activity:
-                LexiconLMS.Models.Activity activity = Model.Activities.FirstOrDefault();
-                name = activity.Name;
-                timeSpan = activity.StartDate.ToShortDateString() + " - " + activity.EndDate.ToShortDateString();
-                description = activity.Description;
-                break;
-            default:
-                break;
-        }
+		switch (Model.Type)
+		{
+			case LexiconLMS.Controllers.ItemInformation.Selection.Course:
+				name = Model.Course.Name;
+				timeSpan = Model.Course.StartDate.ToShortDateString() + " - " + Model.Course.EndDate.ToShortDateString();
+				studentCount = Model.Course.Students.Count;
+				foreach (var student in Model.Course.Students)
+				{
+					studentList += student.UserName + ", ";
+				}
+				description = Model.Course.Description;
+				break;
+			case LexiconLMS.Controllers.ItemInformation.Selection.Module:
+				LexiconLMS.Models.Module module = Model.Modules.FirstOrDefault();
+				name = module.Name;
+				timeSpan = module.StartDate.ToShortDateString() + " - " + module.EndDate.ToShortDateString();
+				description = module.Description;
+				break;
+			case LexiconLMS.Controllers.ItemInformation.Selection.Activity:
+				LexiconLMS.Models.Activity activity = Model.Activities.FirstOrDefault();
+				name = activity.Name;
+				timeSpan = activity.StartDate.ToShortDateString() + " - " + activity.EndDate.ToShortDateString();
+				description = activity.Description;
+				type = activity.Type.Type;
+				break;
+			default:
+				break;
+		}
     }
-    <h3>
-        @name
-    </h3>
-    <div class="ToFromDate">
-        @timeSpan
-    </div>
-    @if (studentCount > 0)
-    {
-        <div class="studentCount">
-            Students: @studentCount
-        </div>
-        <div class="studentList">
-            <i>
-                @studentList
-            </i>
-        </div>
-    }
-    <article>
-        @description
-    </article>
+<div class="_information">
+	<h3>
+		@name
+	</h3>
+	<div class="ToFromDate">
+		<span class="Date">@timeSpan</span>
+		<span class="ActivityType">@type</span>
+	</div>
+	@if (studentCount > 0)
+	{
+		<div class="studentCount">
+			Students: @studentCount
+		</div>
+		<div class="studentList">
+			@studentList
+		</div>
+	}
+	<article>
+		@description
+	</article>
 </div>
+
+
+
 
 

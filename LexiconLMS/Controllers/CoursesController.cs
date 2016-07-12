@@ -15,6 +15,7 @@ namespace LexiconLMS.Controllers
 	{
         public enum Selection
         {
+			None,
             Course,
             Module,
             Activity
@@ -53,11 +54,11 @@ namespace LexiconLMS.Controllers
             }
 
             ItemInformation model = new ItemInformation();
+			model.Type = ItemInformation.Selection.None;
 			if (_courseId > -1)
 			{
 				model.Course = db.Courses.Where(c => c.Id == _courseId).FirstOrDefault();       // Pick the selected course
                 model.Type = ItemInformation.Selection.Course;
-
             }
 
 			if (_moduleId > -1)
