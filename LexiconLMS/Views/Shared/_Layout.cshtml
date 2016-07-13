@@ -18,38 +18,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @*@Html.ActionLink("LexiconLMS", "Index", "Course", new { area = "" }, new { @class = "navbar-brand" })*@
-				<a href="@Url.Action("Index", "Courses")" area = "" class = "navbar-brand lexiconLogo">
-					<img src="@Url.Content(@"~\images\logo-lexicon.gif")" />
-				</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-					@if(User.IsInRole("Teacher"))
-					{
-						<li>@Html.ActionLink("User Management", "Index", "Account")</li>
-						<li>@Html.ActionLink("Course Management", "Index", "Courses")</li>
-					}
-					@if(User.IsInRole("Student"))
-					{
-						<li>@Html.ActionLink("Contactlist", "Index", "Account")</li>
-						<li>@Html.ActionLink("Course", "Index", "Courses")</li>
-					}
-                </ul>
-                @Html.Partial("_LoginPartial")
+               @* @Html.ActionLink("LexiconLMS", "Index", "Course", new { area = "" }, new { @class = "navbar-brand" })*@
+                <a href="@Url.Action("Index", "Courses")" area = "" class = "navbar-brand lexiconLogo">
+        <img src="@Url.Content(@"~\images\logo-lexicon.gif")" />
+    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if(User.IsInRole("Teacher"))
+                        {
+                            <li>@Html.ActionLink("User Management", "Index", "Account")</li>
+                            <li>@Html.ActionLink("Course Management", "Index", "Courses")</li>
+                        }
+                        @if(User.IsInRole("Student"))
+                        {
+                            <li>@Html.ActionLink("Contactlist", "Index", "Account")</li>
+                            <li>@Html.ActionLink("Course", "Index", "Courses")</li>
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - LexiconLMS carefully crafted by Thomas &amp; Mich</p>
-        </footer>
-    </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - LexiconLMS carefully crafted by Thomas &amp; Mich</p>
+            </footer>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>

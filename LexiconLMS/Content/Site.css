@@ -144,9 +144,9 @@ textarea {
 }
 
 .lexiconLogo {
-    margin-top: 2px;
-    height: 80px;
-    text-justify: auto ;
+    margin-top: 0px;
+    height: 20px;
+    justify-content: left;
 }
 .navbar-inverse .navbar-nav > li > a {
     color: #fff;
