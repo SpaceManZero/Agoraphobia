@@ -142,3 +142,15 @@ textarea {
     -ms-text-justify: auto;
     text-justify: auto ;
 }
+
+.lexiconLogo {
+    margin-top: 0px;
+    height: 20px;
+    justify-content: left;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+.nav .navbar-inverse .navbar-nav > li > a:active {
+  color: lightgray;
+}
