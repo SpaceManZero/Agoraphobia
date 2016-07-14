@@ -25,7 +25,7 @@
 		<td>
 			@if (User.IsInRole("Teacher"))
 			{
-				@Html.ActionLink("Edit", "Edit", new { id = item.Id }, null) <span>|</span>
+				@*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, null) <span>|</span>*@
 				@Html.ActionLink("Delete", "Delete", new { id = item.Id }, null)
 			}
 		</td>
@@ -83,7 +83,7 @@
 				<td>
 					@if (User.IsInRole("Teacher"))
 					{
-						@Html.ActionLink("Edit", "Edit", new { id = item.Id }, null) <span>|</span>
+						@*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, null) <span>|</span>*@
 						@Html.ActionLink("Delete", "Delete", new { id = item.Id }, null)
 					}
 				</td>
