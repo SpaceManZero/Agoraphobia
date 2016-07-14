@@ -24,14 +24,6 @@
 <div class="container">
 	<div class="row">
 		<div class="leftColumn, col-lg-2">
-            @if (User.IsInRole("Teacher"))
-            {
-                <div class="CreationLinks">
-                    <div>@Html.ActionLink("Add new Course", "Create", "Courses")</div>
-                    <div>@Html.ActionLink("Add new Module", "Create", "Modules")</div>
-                    <div>@Html.ActionLink("Add new Activity", "Create", "Activities")</div>
-                </div>
-            }
             <div class="courseBlock">
                 @foreach (var course in Model)
                 {
@@ -55,11 +47,23 @@
                                         @Html.ActionLink(activity.Name, "Index", "Courses", new { Course = course.Id, Module = module.Id, Activity = activity.Id }, null)
                                     </h5>
                                 }
+								@if (User.IsInRole("Teacher"))
+								{
+									<h5>@Html.ActionLink("Add Activity", "Create", "Activities", new { Course = course.Id, Module = module.Id }, null)</h5>
+								}
                             </div>
                         }
+						@if (User.IsInRole("Teacher"))
+						{
+							<h4>@Html.ActionLink("Add Module", "Create", "Modules", new { Course = course.Id }, null)</h4>
+						}
                     </div>
                 }
-            </div>
+				@if (User.IsInRole("Teacher"))
+				{
+					<h3>@Html.ActionLink("Add Course", "Create", "Courses")</h3>
+				}
+			</div>
 		</div>
 		<div class="panel, col-lg-8">
 			@Html.Action("_Information")

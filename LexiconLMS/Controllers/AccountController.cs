@@ -84,8 +84,10 @@ namespace LexiconLMS.Controllers
 		//
 		// GET: /Account/Delete
 		[Authorize(Roles = "Teacher")]
-		public ActionResult Delete()
+		public ActionResult Delete(string Id)
 		{
+			ApplicationUser user = UserManager.FindById(Id);
+			var result = UserManager.Delete(user);
 			return RedirectToAction("Index");
 		}
 
@@ -141,6 +143,10 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Register(string Teacher)
         {
+			ApplicationDbContext db = new ApplicationDbContext();
+			IEnumerable<CourseCoreInfo> courseList = db.Courses.Select(c => new CourseCoreInfo { Id = c.Id, Name = c.Name }).ToList();
+			ViewBag.CourseBaseInfo = courseList;
+
 			RegisterViewModel model = new RegisterViewModel();
 			if(Teacher == "true")
 				model.Teacher = true;
@@ -160,11 +166,18 @@ namespace LexiconLMS.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+				if (!model.Teacher)
+				{
+					ApplicationDbContext db = new ApplicationDbContext();
+					user.Course = db.Courses.FirstOrDefault(c => c.Id == model.CourseId);
+					db.Dispose();
+				}
+				var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     var createdUser = UserManager.FindByEmail(model.Email);
                     UserManager.AddToRole(createdUser.Id, model.Teacher ? "Teacher" : "Student");
+					
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);		// Another user is creating this account, don't sign in
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

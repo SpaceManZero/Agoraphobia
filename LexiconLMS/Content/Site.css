@@ -58,61 +58,47 @@ textarea {
     color: #fff;
 }
 
-.navbar-fixed-top a:link, a:visited {
+/*.navbar-fixed-top a:link, a:visited {
     color: white;
 }
 .navbar-nav a:link, a:visited {
     color: white;
-}
+}*/
 
-.CreationLinks {
-    font-size: larger;
-    /*text-align: center;*/
-    margin-left: 5px;
-    margin-top: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-}
-
-.CreationLinks a {
-    color: black;
-}
 .courseBlock {
     margin-top: 0px;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
-.courseBlock a:link, a:visited {
+.courseBlock a {
     color: black;
     text-decoration: none;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    width: 100%;
+    /*display: inline-block;*/
 }
-
+.courseBlock a:link, a:visited {
+        
+}
+.courseBlock a:hover, a:active {
+    background-color: Highlight;
+}
 .courseBlock h3 {
-    margin-top: 0px;
-    padding-top: 15px;
 }
 .courseBlock h4 {
-    margin: 0px;
-    margin-left: 2px;
-    padding: 6px;
-    padding-bottom: 0px;
-    /*border-left: 1px solid grey;*/
+    padding-left: 2px;
 }
 .courseBlock h5 {
-    margin: 0px;
-    margin-left: 12px;
-    padding: 6px;
-    padding-bottom: 0px;
-    /*border-left: 1px solid grey;*/
+    padding-left: 12px;
 }
 
 ._information {
     margin: 10px;
     padding-bottom: 5px;
     padding-top: 5px;
-    /*border-right: 1px solid red;*/
     border-bottom: 1px solid red;
 }
 ._information h3 {
@@ -146,11 +132,11 @@ textarea {
 .lexiconLogo {
     margin-top: 0px;
     height: 20px;
-    justify-content: left;
+    /*justify-content: left;*/
 }
 .navbar-inverse .navbar-nav > li > a {
     color: #fff;
 }
-.nav .navbar-inverse .navbar-nav > li > a:active {
-  color: lightgray;
+.nav .navbar-inverse .navbar-nav > li > a:hover {
+    color: lightgray;
 }

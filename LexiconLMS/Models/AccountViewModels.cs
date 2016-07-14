@@ -72,6 +72,9 @@ namespace LexiconLMS.Models
 		[Display(Name = "Teacher")]
 		public bool Teacher { get; set; }
 
+		[Display(Name = "Course")]
+		public int? CourseId { get; set; }
+
 		[Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

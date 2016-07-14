@@ -1,35 +1,24 @@
 ﻿@model LexiconLMS.Models.Activity
 
-@{
-    ViewBag.Title = "Create";
-	int selectedCourseId = 1;
-}
-
-<h2>Create</h2>
-
+<h2>Create new Activity</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Activity</h4>
-        
+		<div class="form-group">
+			@Html.LabelForModel("Course", new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.HiddenFor(model => model.CourseId)
+				<b>@ViewBag.CourseInfo.Name</b>
+			</div>
+		</div>
 		<div class="form-group">
 			@Html.LabelFor(m => m.Module, new { @class = "control-label col-md-2" })
 			<div class="col-md-10">
-				@Html.DropDownListFor(x => selectedCourseId, new SelectList(ViewBag.CourseBaseInfo, "Id", "Name"), new { @class = "form-control" })
-			</div>
-		</div>
-		
-		<div class="form-group">
-			@Html.LabelFor(model => model.Module, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@{
-					IEnumerable<LexiconLMS.Controllers.ModuleCoreInfo> modules = ViewBag.ModuleCoreInfo;
-					SelectList list = new SelectList(modules.Select(m => m.CourseId == selectedCourseId), "Id", "Name");
-				}
-				@Html.DropDownListFor(model => model.ModuleId, list, new { @class = "form-control" })
+				<b>@ViewBag.ModuleInfo.Name</b>
+				@Html.HiddenFor(model => model.ModuleId)
 			</div>
 		</div>
 		
@@ -42,9 +31,10 @@
         </div>
 
 		<div class="form-group">
-			@Html.LabelFor(m => m.Type, new { @class = "control-label col-md-2" })
+			@Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
 			<div class="col-md-10">
-				@Html.DropDownListFor(a => a.Type, new SelectList(ViewBag.ActivityType, "Id", "Type"), new { @class = "form-control" })
+				@*@Html.DropDownListFor(model => model.Type, new SelectList(ViewBag.ActivityType, "Id", "Type"), new { @class = "form-control" })*@
+				@Html.DropDownListFor(model => model.TypeId, new SelectList(ViewBag.ActivityType, "Id", "Type"), new { @class = "form-control" })
 			</div>
 		</div>
 

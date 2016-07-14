@@ -200,6 +200,18 @@
     <Compile Include="Migrations\201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.Designer.cs">
       <DependentUpon>201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607140709439_Added_GrandParent_ID_To_Activity.cs" />
+    <Compile Include="Migrations\201607140709439_Added_GrandParent_ID_To_Activity.Designer.cs">
+      <DependentUpon>201607140709439_Added_GrandParent_ID_To_Activity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607141253557_Added_TypeId_To_Activity.cs" />
+    <Compile Include="Migrations\201607141253557_Added_TypeId_To_Activity.Designer.cs">
+      <DependentUpon>201607141253557_Added_TypeId_To_Activity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607141359592_Fixed_Typo_in_Activity.cs" />
+    <Compile Include="Migrations\201607141359592_Fixed_Typo_in_Activity.Designer.cs">
+      <DependentUpon>201607141359592_Fixed_Typo_in_Activity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -316,6 +328,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.resx">
       <DependentUpon>201607121335198_Added_Parent_IDs_To_Moduel_and_Activity2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607140709439_Added_GrandParent_ID_To_Activity.resx">
+      <DependentUpon>201607140709439_Added_GrandParent_ID_To_Activity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607141253557_Added_TypeId_To_Activity.resx">
+      <DependentUpon>201607141253557_Added_TypeId_To_Activity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607141359592_Fixed_Typo_in_Activity.resx">
+      <DependentUpon>201607141359592_Fixed_Typo_in_Activity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

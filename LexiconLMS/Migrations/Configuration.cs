@@ -46,11 +46,11 @@ namespace LexiconLMS.Migrations
 			context.SaveChanges();
 
 			// Add ActivityTypes NOTE: THIS SHOULD BE PART OF DB INITIALIZATION
-			context.ActivityTypes.AddOrUpdate(new ActivityType { Type = "Lecture" });
-			context.ActivityTypes.AddOrUpdate(new ActivityType { Type = "E-Learning" });
-			context.ActivityTypes.AddOrUpdate(new ActivityType { Type = "Exercise" });
-			context.ActivityTypes.AddOrUpdate(new ActivityType { Type = "Code-Along" });
-			context.ActivityTypes.AddOrUpdate(new ActivityType { Type = "Assignment" });
+			context.ActivityTypes.AddOrUpdate(t => t.Id, new ActivityType { Type = "Lecture" });
+			context.ActivityTypes.AddOrUpdate(t => t.Id, new ActivityType { Type = "E-Learning" });
+			context.ActivityTypes.AddOrUpdate(t => t.Id, new ActivityType { Type = "Exercise" });
+			context.ActivityTypes.AddOrUpdate(t => t.Id, new ActivityType { Type = "Code-Along" });
+			context.ActivityTypes.AddOrUpdate(t => t.Id, new ActivityType { Type = "Assignment" });
 			context.SaveChanges();
 
 			ActivityType lecture = context.ActivityTypes.FirstOrDefault(c => c.Type == "Lecture");
@@ -118,7 +118,9 @@ namespace LexiconLMS.Migrations
 				Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi.",
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today,
+				TypeId = 1,
 				Type = lecture,
+				CourseId = module1.CourseId,
 				ModuleId = module1.Id,
 				Module = module1
 			});
@@ -128,7 +130,9 @@ namespace LexiconLMS.Migrations
 				Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi.",
 				StartDate = DateTime.Today.AddDays(1),
 				EndDate = DateTime.Today.AddDays(1),
+				TypeId = 1,
 				Type = lecture,
+				CourseId = module1.CourseId,
 				ModuleId = module1.Id,
 				Module = module1
 			});
@@ -138,7 +142,9 @@ namespace LexiconLMS.Migrations
 				Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi.",
 				StartDate = DateTime.Today.AddDays(16),
 				EndDate = DateTime.Today.AddDays(16),
+				TypeId = 1,
 				Type = lecture,
+				CourseId = module2.CourseId,
 				ModuleId = module2.Id,
 				Module = module2
 			});
@@ -148,7 +154,9 @@ namespace LexiconLMS.Migrations
 				Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi.",
 				StartDate = DateTime.Today.AddDays(17),
 				EndDate = DateTime.Today.AddDays(17),
+				TypeId = 5,
 				Type = assignment,
+				CourseId = module2.CourseId,
 				ModuleId = module2.Id,
 				Module = module2
 			});
@@ -158,7 +166,9 @@ namespace LexiconLMS.Migrations
 				Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Vestibulum semper dapibus dui.Aliquam vehicula sapien mauris, vel interdum elit pharetra quis.Nulla facilisi.",
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today.AddDays(2),
+				TypeId = 2,
 				Type = elearning,
+				CourseId = module3.CourseId,
 				ModuleId = module3.Id,
 				Module = module3
 			});

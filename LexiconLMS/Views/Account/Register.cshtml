@@ -25,6 +25,13 @@
 
     @* CheckBox to distinguish teachers from students <----------/> *@
 
+	<div class="form-group">
+		@Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.DropDownListFor(model => model.CourseId, new SelectList(ViewBag.CourseBaseInfo, "Id", "Name"), new { @class = "form-control" })
+		</div>
+	</div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">

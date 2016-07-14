@@ -43,15 +43,15 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Activities/Create
-        public ActionResult Create()
+        public ActionResult Create(int Course, int Module)
         {
-			IEnumerable<CourseCoreInfo> courseList = db.Courses.Select(c => new CourseCoreInfo { Id = c.Id, Name = c.Name }).ToList();
-			ViewBag.CourseBaseInfo = courseList;
-			IEnumerable<ModuleCoreInfo> moduleList = db.Modules.Select(c => new ModuleCoreInfo { Id = c.Id, Name = c.Name, CourseId = c.Id }).ToList();
-			ViewBag.ModuleBaseInfo = courseList;
-			IEnumerable<ActivityType> typeList = db.ActivityTypes.ToList();
-			ViewBag.ActivityType = typeList;
-			return View();
+			ViewBag.CourseInfo = db.Courses.Where(c => c.Id == Course).Select(c => new CourseCoreInfo { Id = c.Id, Name = c.Name }).Single();
+			ViewBag.ModuleInfo = db.Modules.Where(m => m.Id == Module).Select(m => new ModuleCoreInfo { Id = m.Id, Name = m.Name }).Single();
+			ViewBag.ActivityType = db.ActivityTypes.ToList();
+			Activity model = new Activity();
+			model.CourseId = Course;
+			model.ModuleId = Module;
+			return View(model);
         }
 
         // POST: Activities/Create
@@ -59,15 +59,16 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CourseId,ModuleId,Name,Type,Description,StartDate,EndDate")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,CourseId,ModuleId,TypeId,Name,Description,StartDate,EndDate")] Activity activity)
         {
             if (ModelState.IsValid)
             {
 				activity.Module = db.Modules.FirstOrDefault(m => m.Id == activity.ModuleId);
+				activity.Type = db.ActivityTypes.FirstOrDefault(m => m.Id == activity.TypeId);
 
 				db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Courses", new { Course = activity.CourseId, Module = activity.ModuleId, Activity = activity.Id });
             }
 
             return View(activity);
